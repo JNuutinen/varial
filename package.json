@@ -35,6 +35,19 @@
   },
   "name": "varial",
   "description": "React theming using CSS variables",
+  "keywords": [
+    "react",
+    "css",
+    "theme",
+    "ssr",
+    "dark-theme",
+    "nextjs",
+    "themes",
+    "theming",
+    "next",
+    "dark-mode",
+    "themes-css"
+  ],
   "author": "Juha Nuutinen",
   "module": "dist/varial.esm.js",
   "size-limit": [
