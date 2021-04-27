@@ -34,7 +34,7 @@
     "trailingComma": "es5"
   },
   "name": "varial",
-  "description": "CSS variable based theming for React apps",
+  "description": "React theming using CSS variables",
   "author": "Juha Nuutinen",
   "module": "dist/varial.esm.js",
   "size-limit": [
