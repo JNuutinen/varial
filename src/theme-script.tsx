@@ -45,9 +45,9 @@ const getThemeScript = (): string => {
   const styles = getStyles();
   const defaultVariant = getDefaultVariant();
   const themeScript = String(setThemeMode)
-    .replace('"🌈"', JSON.stringify(styles))
-    .replace('"⭐️"', defaultVariant ? `"${defaultVariant}"` : 'undefined')
-    .replace('"🔎"', isDetectColorSchemeEnabled().toString());
+    .replace("'🌈'", JSON.stringify(styles))
+    .replace("'⭐'", defaultVariant ? `"${defaultVariant}"` : 'undefined')
+    .replace("'🔎'", isDetectColorSchemeEnabled().toString());
   // TODO: Minify `setThemeMode`
   //   Cannot use Terser.minify on `setThemeMode` no longer because it is async :(
   return `(${themeScript})()`;
