@@ -34,9 +34,7 @@ ReactDOM.render(
 
 ## Initialization
 
-The library must be initialized before use by providing a `styles` object that contains a mapping of global CSS variables. Both regular key-value pairs as well as different values for each theme variant can be provided.
-
-`varial.init` must be called before using any other features of the library.
+The library must be initialized by providing a `styles` object that contains a mapping of global CSS variables. Both regular key-value pairs as well as different values for each theme variant can be provided.
 
 ```jsx
 import varial from "varial";
@@ -122,7 +120,7 @@ Pre-rendered apps have existing HTML already when they arrive to the browser, so
 
 The library provides a mechanism for injecting a script to the beginning of your page that will update the CSS variables to the selected variant before any other code is executed. That way your pre-rendered and contentful page will have the user's preferred color scheme on the very first render.
 
-For example with Next.js, place `ThemeScript` before `NextScript` in your custom `Document`:
+For example with Next.js, place `ThemeScript` as the first element of `body` in your custom `Document`:
 
 ```jsx
 import Document, { Head, Html, Main, NextScript } from "next/document";
