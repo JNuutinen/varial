@@ -7,12 +7,15 @@ import {
 import { Styles } from './interfaces';
 
 function setThemeMode() {
-  const styles = ('🌈' as unknown) as Styles;
+  // prettier-ignore
+  const styles = ("🌈" as unknown) as Styles;
   const localSetting = window.localStorage.getItem(
     `varial-${window.location.host}-variant`
   );
-  let variant = '⭐️';
-  const detectColorScheme = ('🔎' as unknown) as boolean;
+  // prettier-ignore
+  let variant = "⭐";
+  // prettier-ignore
+  const detectColorScheme = ("🔎" as unknown) as boolean;
   if (localSetting) {
     variant = localSetting;
   } else if (detectColorScheme) {
@@ -42,14 +45,11 @@ function setThemeMode() {
 }
 
 const getThemeScript = (): string => {
-  const styles = getStyles();
   const defaultVariant = getDefaultVariant();
   const themeScript = String(setThemeMode)
-    .replace("'🌈'", JSON.stringify(styles))
-    .replace("'⭐'", defaultVariant ? `"${defaultVariant}"` : 'undefined')
-    .replace("'🔎'", isDetectColorSchemeEnabled().toString());
-  // TODO: Minify `setThemeMode`
-  //   Cannot use Terser.minify on `setThemeMode` no longer because it is async :(
+    .replace('"🌈"', JSON.stringify(getStyles()))
+    .replace('"⭐"', defaultVariant ? `"${defaultVariant}"` : 'undefined')
+    .replace('"🔎"', isDetectColorSchemeEnabled().toString());
   return `(${themeScript})()`;
 };
 
