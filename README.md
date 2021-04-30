@@ -32,6 +32,12 @@ ReactDOM.render(
 * Theme switch with React Context
 * Smooth initial theme load with pre-rendered React pages – avoid the "white flash"
 
+## Install
+
+```sh
+npm install varial
+```
+
 ## Initialization
 
 The library must be initialized by providing a `styles` object that contains a mapping of global CSS variables. Both regular key-value pairs as well as different values for each theme variant can be provided.
