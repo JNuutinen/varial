@@ -20,7 +20,8 @@
     "analyze": "size-limit --why"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
   },
   "husky": {
     "hooks": {
@@ -74,8 +75,6 @@
     "eslint-config-airbnb-typescript-prettier": "^4.2.0",
     "husky": "^6.0.0",
     "prettier": "^2.2.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "size-limit": "^4.10.2",
     "tsdx": "^0.14.1",
     "tslib": "^2.2.0",

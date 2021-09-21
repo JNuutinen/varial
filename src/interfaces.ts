@@ -1,4 +1,5 @@
 export interface Config {
+  variants: string[];
   styles: Styles;
   defaultVariant: string | undefined;
   detectColorScheme: boolean;
@@ -16,5 +17,4 @@ export interface StylesByVariant {
 export interface InternalState {
   variant: string | undefined;
   styles: Styles;
-  clear(): void;
 }

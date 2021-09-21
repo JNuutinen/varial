@@ -8,5 +8,6 @@ module.exports = {
   },
   rules: {
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    'import/no-unresolved': ['error', { ignore: ['^react$'] }],
   },
 };

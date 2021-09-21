@@ -4,6 +4,7 @@ Varial provides UI theme support for React apps using CSS variables.
 
 ```jsx
 varial.init({
+  variants: ['light', 'dark'],
   styles: { background: { light: 'white', dark: 'black' } },
 });
 
@@ -40,10 +41,12 @@ npm install varial
 
 ## Initialization
 
-The library must be initialized by providing a `styles` object that contains a mapping of global CSS variables. Both regular key-value pairs as well as different values for each theme variant can be provided.
+The library must be initialized by providing a `styles` object that contains a mapping of global CSS variables as well as a `variants` array containing the names of all variants used in `styles`. Both regular key-value pairs as well as different values for each theme variant can be provided.
 
 ```jsx
 import varial from "varial";
+
+const variants = ['light', 'dark'];
 
 const styles = {
   greyDark: "hsl(215, 22%, 15%)",
@@ -58,7 +61,7 @@ const styles = {
   },
 };
 
-varial.init({ styles, defaultVariant: "dark" });
+varial.init({ variants, styles, defaultVariant: "dark" });
 ```
 
 This will create the following global CSS variables:
