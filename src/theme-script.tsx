@@ -2,21 +2,24 @@ import React from 'react';
 import {
   getDefaultVariant,
   getStyles,
+  getVariants,
   isDetectColorSchemeEnabled,
 } from './config';
 import { Styles } from './interfaces';
 
 function setThemeMode() {
   // prettier-ignore
-  const styles = ("🌈" as unknown) as Styles;
+  const styles = ("{styles}" as unknown) as Styles;
   const localSetting = window.localStorage.getItem(
     `varial-${window.location.host}-variant`
   );
   // prettier-ignore
-  let variant = "⭐";
+  let variant = "{variant}";
   // prettier-ignore
-  const detectColorScheme = ("🔎" as unknown) as boolean;
-  if (localSetting) {
+  const variants = ("{variants}" as unknown) as string[]
+  // prettier-ignore
+  const detectColorScheme = ("{detectColorScheme}" as unknown) as boolean;
+  if (localSetting && variants.includes(localSetting)) {
     variant = localSetting;
   } else if (detectColorScheme) {
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
@@ -47,9 +50,13 @@ function setThemeMode() {
 const getThemeScript = (): string => {
   const defaultVariant = getDefaultVariant();
   const themeScript = String(setThemeMode)
-    .replace('"🌈"', JSON.stringify(getStyles()))
-    .replace('"⭐"', defaultVariant ? `"${defaultVariant}"` : 'undefined')
-    .replace('"🔎"', isDetectColorSchemeEnabled().toString());
+    .replace('"{styles}"', JSON.stringify(getStyles()))
+    .replace(
+      '"{variant}"',
+      defaultVariant ? `"${defaultVariant}"` : 'undefined'
+    )
+    .replace('"{variants}"', JSON.stringify(getVariants()))
+    .replace('"{detectColorScheme}"', isDetectColorSchemeEnabled().toString());
   return `(${themeScript})()`;
 };
 

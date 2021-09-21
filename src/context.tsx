@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  clearSavedVariant,
   getDefaultVariant,
   getStyles,
   isDetectColorSchemeEnabled,
@@ -7,6 +8,7 @@ import {
 import { isServer, updateCssVariables } from './util';
 import { getFromStorage, saveToStorage } from './storage';
 import { STORAGE_KEY_VARIANT, Variant } from './constants';
+import MissingVariantError from './errors/missing-variant';
 
 const MATCH_MEDIA_DARK = '(prefers-color-scheme: dark)';
 
@@ -40,15 +42,20 @@ const getPreferredColorScheme = () =>
 const getSavedVariant = () => getFromStorage(STORAGE_KEY_VARIANT);
 
 const getDefaultOrDetectedVariant = (): string | undefined => {
-  if (isServer()) {
-    return getDefaultVariant();
+  let variant = getDefaultVariant();
+  if (!isServer()) {
+    const savedVariant = getSavedVariant();
+    if (savedVariant) {
+      variant = savedVariant;
+    } else if (isDetectColorSchemeEnabled()) {
+      variant = getPreferredColorScheme();
+    }
   }
-  const savedVariant = getSavedVariant();
-  if (savedVariant) {
-    return savedVariant;
-  }
-  if (isDetectColorSchemeEnabled()) return getPreferredColorScheme();
-  return getDefaultVariant();
+  if (typeof variant === 'undefined')
+    throw new Error(
+      'To use VariantProvider you must configure defaultVariant or use detectColorScheme.'
+    );
+  return variant;
 };
 
 const [useVariantCtx, CtxProvider] = createCtx<VariantContext>();
@@ -67,12 +74,18 @@ const VariantProvider: React.FC = ({ children }) => {
   );
 
   React.useEffect(() => {
-    const detectedVariant = getDefaultOrDetectedVariant();
-    if (typeof detectedVariant === 'undefined')
-      throw new Error(
-        'To use VariantProvider you must configure defaultVariant or use detectColorScheme.'
-      );
-    updateCssVariables(getStyles(), detectedVariant);
+    let detectedVariant = getDefaultOrDetectedVariant();
+    try {
+      updateCssVariables(getStyles(), detectedVariant);
+    } catch (e) {
+      if (e instanceof MissingVariantError) {
+        clearSavedVariant();
+        detectedVariant = getDefaultOrDetectedVariant();
+        updateCssVariables(getStyles(), detectedVariant);
+      } else {
+        throw e;
+      }
+    }
     if (isDetectColorSchemeEnabled()) {
       addColorSchemeListener(() => setVariant(getPreferredColorScheme()));
     }
